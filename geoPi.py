@@ -19,18 +19,21 @@ def plot(img, title):
     plt.show()
 
 def getSatImage(zoom, level, lat, long) :
-    point = Point.from_latitude_longitude(lat, long)
+    point = Point.from_latitude_longitude(lat, long) #assign latitude, longitude
     print('Pixels: ', point.pixels(zoom=zoom))  # Pixels:  (34430592, 49899136)
     print('Lat/Lon: ', point.latitude_longitude)  # Lat/Lon:  (41.84987190947754, -87.64995574951166)
 
     tms_x, tms_y = 134494, 329369
     tile = Tile.from_tms(tms_x=tms_x, tms_y=tms_y, zoom=zoom)  # Tile Map Service (TMS) X Y and zoom
 
+    #convert latitude, longitude to a row and column to be used by the GIBS API
     row = int(((90 - point.latitude) * (2 ** level)) // 288)
     col = int(((180 + point.longitude) * (2 ** level)) // 288)
 
+    #build and return URL
     url = 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2016-09-03/250m/'
     return url + str(level) + "/" + str(row) + "/" + str(col) + ".jpg"
+
 
 fileName = "satImage.jpg"
 img_data = requests.get(getSatImage(19, 7, 43.2557, -79.8711)).content

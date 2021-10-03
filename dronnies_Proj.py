@@ -50,7 +50,7 @@ imgAerosol = loadData("aerosol.csv")
 img = imgVeg + (imgAerosol)
 img = np.clip(0,255,img)
 
-io.imsave("aggregate.png")
+io.imsave("aggregate.png", img)
 
 plot(img, "TRUE+AEROSOL")
 

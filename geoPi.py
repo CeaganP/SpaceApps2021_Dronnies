@@ -42,3 +42,20 @@ with open(fileName, 'wb') as handler:
 
 img = io.imread(fileName)
 plot(img, "SatImage of Us")
+
+#to get latitude from x,y
+#if (x < halfTotalX)= (-180 * indexPercent)
+#else if (x > halfTotalX) = (180 * indexPercent)
+
+#if (y < halfTotalY)= (90 * indexPercent)
+#else if (y > halfTotalY) = (-90 * indexPercent)
+
+
+#with the image, we now want to look at the data sets we are using
+
+#first air
+#second land
+#third space
+
+#we will combine the data from each, air, land and space together
+#with the data combined we will then be able to create something

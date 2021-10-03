@@ -14,34 +14,6 @@ def plot(img, title):
     plt.axis('off')
     plt.show()
 
-def plot_quantize_special(img, k, t):
-    """
-    img - image being used, k is the number of clusters, t is the method the image is being modified by
-    Perform quantization on the image using KMeans, modify the original
-        image by the quantized image for different representations
-    """
-    shape = img.shape
-    img_orig = img
-    #create list of values
-    img = img.reshape(shape[0] * shape[1], shape[2])
-
-    km = KMeans(n_init=20, n_clusters=k).fit(img)
-
-    #create an array that's the same length as predict, for each point in the data, the center it is closest to
-    img = km.cluster_centers_[km.predict(img)]
-    img = np.round(img, 0).astype(int)
-    img = img.reshape(shape[0], shape[1], shape[2])
-
-    if t==0:
-        img = (img_orig * img);
-    elif t==2:
-            img = abs(img_orig - img);
-    elif t==3:
-            img = img_orig / img;
-
-
-    plot(img, "K " + str(k) + "T " + str(t))
-
 imgVeg = io.imread("vegetation.png")
 
 def loadData(file):
@@ -77,6 +49,8 @@ imgAerosol = loadData("aerosol.csv")
 #img = imgAerosol + imgVeg
 img = imgVeg + (imgAerosol)
 img = np.clip(0,255,img)
+
+io.imsave("aggregate.png")
 
 plot(img, "TRUE+AEROSOL")
 
